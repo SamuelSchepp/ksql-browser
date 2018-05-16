@@ -1,0 +1,13 @@
+GET http://localhost:8080/
+
+###
+
+GET http://localhost:8080/topics
+
+###
+
+GET http://localhost:8080/topic/users
+
+###
+
+

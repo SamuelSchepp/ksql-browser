@@ -1,0 +1,27 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<h1>Kafka GUI</h1>
+<h2>Topics</h2>
+<table *ngIf="topics.length > 0">
+<tr>
+  <td >Topic</td>
+  <td >Display</td>
+</tr>
+<tr *ngFor="let row of topics">
+  <td>{{row}}</td>
+  <td>
+    <button (click)="display(row)">Show</button>
+  </td>
+</tr>
+</table>
+
+
+<h2>Data</h2>
+<h3 *ngIf="loading">Loading...</h3>
+<table *ngIf="displayData.length > 0">
+  <tr>
+    <td *ngFor="let key of keys(displayData[0])">{{key}}</td>
+  </tr>
+  <tr *ngFor="let row of displayData">
+    <td *ngFor="let key of keys(row)">{{row[key]}}</td>
+  </tr>
+</table>

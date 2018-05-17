@@ -8,19 +8,30 @@ import {HttpClient} from '@angular/common/http';
 })
 export class AppComponent implements OnInit {
   topics: any[];
+  selectedTopic: string;
   displayData: any[];
-  loading: boolean;
+  status: string;
+
+  postToTopicInput: string;
 
   constructor(private httpClient: HttpClient) {
-    this.loading = false;
+    this.selectedTopic = '';
     this.topics = [];
     this.displayData = [];
+    this.status = '';
+
+    this.postToTopicInput = '{"registertime":123,"gender":"MALE","regionid":"THM","userid":"SAMUEL"}\n';
   }
 
   async ngOnInit(): Promise<void> {
-    this.loading = true;
     this.topics = await this.httpClient.get('/topics').toPromise() as any[];
-    this.loading = false;
+    this.status = 'topics loaded';
+
+    setInterval(() => {
+      if (this.selectedTopic.length > 0) {
+        this.display(this.selectedTopic);
+      }
+    }, 1000);
   }
 
   keys(target: any): string[] {
@@ -28,9 +39,19 @@ export class AppComponent implements OnInit {
   }
 
   async display(topic: string): Promise<void> {
-    this.loading = true;
-    this.displayData = [];
     this.displayData = await this.httpClient.get('/topic/' + topic).toPromise() as any[];
-    this.loading = false;
+    this.selectedTopic = topic;
+    this.status = 'data displayed';
+  }
+
+  async postToTopic(): Promise<void> {
+    try {
+      const data = JSON.parse(this.postToTopicInput);
+      const result = await this.httpClient.post('/topic/' + this.selectedTopic, data).toPromise();
+      this.status = 'okay: ' + JSON.stringify(result);
+    } catch (err) {
+      console.error(err);
+      this.status = JSON.stringify(err);
+    }
   }
 }

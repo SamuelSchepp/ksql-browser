@@ -1,68 +1,58 @@
 import * as express from 'express';
-import {KafkaHelper} from './kafka';
-import * as kafka from 'kafka-node';
 import {Consumer} from 'kafka-node';
+import {KafkaClientWrapper} from './KafkaClient';
+import {KafkaProxy} from './KafkaProxy';
+import {Express} from 'express';
+import {RequestError} from 'request-promise/errors';
 
-const topics: {[key: string]: string[]} = {};
+class Main {
+  private router: Express;
+  private kafkaProxy: KafkaProxy;
+  private kafkaClientWrapper: KafkaClientWrapper;
 
-const router = express();
-router.use(express.json());
+  async start() {
+    this.router = express();
+    this.router.use(express.json());
 
-const client = new kafka.KafkaClient({
-  kafkaHost: 'localhost:9092',
-  connectTimeout: 3000,
-  requestTimeout: 3000
-});
-client.on('ready', () => {
-  console.log('Kafka is ready.');
-});
-client.on('error', (error) => {
-  console.log('Kafka is error: ' + error);
-});
+    this.kafkaProxy = new KafkaProxy();
+    this.kafkaClientWrapper = new KafkaClientWrapper();
 
-router.get('/topics', KafkaHelper.kafkaProxy());
+    const topics = await this.kafkaProxy.getTopics();
+    await this.kafkaClientWrapper.connect(topics);
+    console.log("Kafka Wrapper connected");
 
-router.get('/topic/:id', (req, res) => {
-  if (topics[req.params.id]) {
-    res.send(topics[req.params.id]);
-  } else {
-    let consumer = new Consumer(
-      client,
-      [
-        {
-          topic: req.params.id,
-        },
-      ],
-      {
-        autoCommit: false,
-      },
-    );
-    consumer.on('message', (message) => {
-      if (!topics[req.params.id]) {
-        topics[req.params.id] = [];
-        message.value.toString().split("\n").forEach((line) => {
-          try {
-            topics[req.params.id].push(JSON.parse(line));
-          } catch (err) { }
-        });
-        res.send(topics[req.params.id]);
-      }
-      else {
-        if (topics[req.params.id].length > 1000) {
-          topics[req.params.id].splice(0, 1);
-        }
-        message.value.toString().split("\n").forEach((line) => {
-          try {
-            topics[req.params.id].push(JSON.parse(line));
-          } catch (err) { }
-        });
-      }
+    this.configureRouter(this.router);
+    this.router.listen(8080, () => {
+      console.log('http://localhost:8080/');
     });
   }
-});
 
-router.use('/', express.static(__dirname + '/../client/dist'));
+  private configureRouter(router: Express) {
+    router.get('/topics', async (req, res) => {
+      const topicList = await this.kafkaProxy.getTopics();
+      res.send(topicList)
+    });
 
-router.listen(8080, () => {
-  console.log('http://localhost:8080/');
-});
+    router.get('/topic/:id', async (req, res) => {
+      const topic = await this.kafkaClientWrapper.getTopicData(req.params.id);
+      res.send(topic)
+    });
+
+    router.post('/topic/:id', async (req, res) => {
+      try {
+        const topic = await this.kafkaProxy.postToTopic(req.params.id, req.body);
+        res.send({message: 'okay'});
+      } catch (err) {
+        res.status(err.response.statusCode);
+        res.send(err)
+      }
+    });
+
+    router.use('/', express.static(__dirname + '/../client/dist'));
+  }
+}
+
+new Main().start();
+
+
+

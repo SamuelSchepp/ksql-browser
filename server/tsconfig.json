@@ -1,2 +1,6 @@
 {
+  "compilerOptions": {
+    "lib": ["es6"],
+    "target": "es6"
+  }
 }

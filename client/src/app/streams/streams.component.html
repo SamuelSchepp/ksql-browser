@@ -1,0 +1,21 @@
+<div class="card align-top mr-3 full-height">
+  <div class="card-body full-height scrollable">
+    <h2>Streams</h2>
+    <table class="table table-striped" *ngIf="streams.length > 0">
+      <thead>
+      <tr>
+        <th>Stream</th>
+        <th>Topic</th>
+        <th>Format</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let stream of streams">
+        <td>{{stream.name}}</td>
+        <td>{{stream.topic}}</td>
+        <td>{{stream.format}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

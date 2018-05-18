@@ -1,8 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 .card {
     display: inline-block;
-    border: 1px solid black;
-    padding: 20pt;
-    margin: 20pt;
-    vertical-align: top;
+    width: auto;
+}
+
+.full-height, body, html {
+    height: 500pt;
+}
+
+.scrollable {
+    overflow: scroll;
 }

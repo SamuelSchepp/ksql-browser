@@ -4,16 +4,19 @@ import {KafkaNode} from './KafkaNode';
 import {KafkaProxy} from './KafkaProxy';
 import {Express} from 'express';
 import {RequestError} from 'request-promise/errors';
+import {KSQLRest} from './KSQLRest';
 
 class Main {
   private router: Express;
   private kafkaProxy: KafkaProxy;
   private kafkaNode: KafkaNode;
+  private ksqlRest: KSQLRest;
 
   async start() {
     this.router = express();
     this.router.use(express.json());
 
+    this.ksqlRest = new KSQLRest();
     this.kafkaProxy = new KafkaProxy();
     this.kafkaNode = new KafkaNode();
 
@@ -56,6 +59,10 @@ class Main {
         res.status(err.response.statusCode);
         res.send(err)
       }
+    });
+
+    router.get('/streams', async (req, res) => {
+      res.send(await this.ksqlRest.getStreams());
     });
 
     router.use('/', express.static(__dirname + '/../../client/dist'));

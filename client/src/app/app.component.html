@@ -1,15 +1,20 @@
 <!--The content below is only a placeholder and can be replaced.-->
+<div class="pt-3 pl-3 full-height pb-3">
 
-<div class="card">
-  <h1>Kafka GUI</h1>
+  <div class="d-inline-block">
+    <div class="card align-top mr-3 mb-3">
+      <div class="card-body">
+        <h1>Kafka GUI</h1>
+      </div>
+    </div>
+    <br>
+    <app-post-to-topic></app-post-to-topic>
+    <br>
+    <app-create-topic></app-create-topic>
+  </div>
+
+  <app-topics (topicSelected)="topicSelected($event)"></app-topics>
+  <app-topic #topic [selectedTopic]="selectedTopic"></app-topic>
+  <app-streams></app-streams>
 
 </div>
-
-
-<app-topics (topicSelected)="topicSelected($event)"></app-topics>
-
-<app-post-to-topic></app-post-to-topic>
-
-<app-create-topic></app-create-topic>
-
-<app-topic [selectedTopic]="selectedTopic"></app-topic>

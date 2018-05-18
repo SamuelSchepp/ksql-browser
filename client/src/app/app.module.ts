@@ -9,6 +9,7 @@ import { TopicsComponent } from './topics/topics.component';
 import { PostToTopicComponent } from './post-to-topic/post-to-topic.component';
 import { CreateTopicComponent } from './create-topic/create-topic.component';
 import { TopicComponent } from './topic/topic.component';
+import { StreamsComponent } from './streams/streams.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { TopicComponent } from './topic/topic.component';
     TopicsComponent,
     PostToTopicComponent,
     CreateTopicComponent,
-    TopicComponent
+    TopicComponent,
+    StreamsComponent
   ],
   imports: [
     BrowserModule,

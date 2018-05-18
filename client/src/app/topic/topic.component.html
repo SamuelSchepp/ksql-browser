@@ -1,14 +1,17 @@
-<div class="card">
-  <ng-container *ngIf="selectedTopic.length > 0">
-
+<div class="card align-top mr-3 full-height" *ngIf="selectedTopic.length > 0">
+  <div class="card-body full-height scrollable">
     <h2>Topic: {{selectedTopic}}</h2>
-    <table *ngIf="displayData.length > 0">
+    <table *ngIf="displayData.length > 0" class="table table-striped">
+      <thead>
       <tr>
-        <td *ngFor="let key of keys(displayData[0])">{{key}}</td>
+        <th *ngFor="let key of keys(displayData[0])">{{key}}</th>
       </tr>
+      </thead>
+      <tbody>
       <tr *ngFor="let row of displayData">
         <td *ngFor="let key of keys(row)">{{row[key]}}</td>
       </tr>
+      </tbody>
     </table>
-  </ng-container>
+  </div>
 </div>

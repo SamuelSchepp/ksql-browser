@@ -34,6 +34,10 @@ export class TopicComponent implements OnInit {
     this.selectedTopic = topic;
   }
 
+  clear(): void {
+    this.displayData = [];
+  }
+
   keys(target: any): string[] {
     return Object.keys(target);
   }

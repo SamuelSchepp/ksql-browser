@@ -11,11 +11,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 const KafkaNode_1 = require("./KafkaNode");
 const KafkaProxy_1 = require("./KafkaProxy");
+const KSQLRest_1 = require("./KSQLRest");
 class Main {
     start() {
         return __awaiter(this, void 0, void 0, function* () {
             this.router = express();
             this.router.use(express.json());
+            this.ksqlRest = new KSQLRest_1.KSQLRest();
             this.kafkaProxy = new KafkaProxy_1.KafkaProxy();
             this.kafkaNode = new KafkaNode_1.KafkaNode();
             const topics = yield this.kafkaProxy.getTopics();
@@ -55,6 +57,9 @@ class Main {
                 res.status(err.response.statusCode);
                 res.send(err);
             }
+        }));
+        router.get('/streams', (req, res) => __awaiter(this, void 0, void 0, function* () {
+            res.send(yield this.ksqlRest.getStreams());
         }));
         router.use('/', express.static(__dirname + '/../../client/dist'));
     }

@@ -67,10 +67,12 @@ export class KafkaNode {
       }
     });
     this._consumers[topicName].on('error', (error) => {
-      console.log(`${topicName}: ${error}`);
+      console.log(`${topicName} error: ${JSON.stringify(error)}`);
     });
     this._consumers[topicName].on('offsetOutOfRange', (error) => {
-      console.log(`${topicName}: ${error}`);
+      console.log(`${topicName} error: ${JSON.stringify(error)}`);
+      this._consumers[topicName].close(true, () => {});
+      this._clients[topicName].close(() => {});
     })
   }
 
@@ -80,7 +82,7 @@ export class KafkaNode {
 
   getTopicData(topicName: string): string[] {
     if(this.isConnectedToTopic(topicName)) {
-      return this._topics[topicName].data;
+      return this._topics[topicName].dataReversed;
     } else {
       this.connectToTopic(topicName);
       return [];
@@ -95,6 +97,7 @@ export class KafkaNode {
           reject();
         } else {
           console.log(`Created ${topicName}`);
+          this.connectToTopic(topicName);
           fulfill();
         }
       });

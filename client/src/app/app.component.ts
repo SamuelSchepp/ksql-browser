@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {TopicComponent} from './topic/topic.component';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,8 @@ import {HttpClient} from '@angular/common/http';
 export class AppComponent implements OnInit {
   status: string;
   selectedTopic: string;
+
+  @ViewChild(TopicComponent) topic: TopicComponent;
 
   constructor(private httpClient: HttpClient) {
     this.status = '';
@@ -20,6 +23,7 @@ export class AppComponent implements OnInit {
   }
 
   topicSelected(topicName: string): void {
+    this.topic.clear();
     this.selectedTopic = topicName;
   }
 }

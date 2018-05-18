@@ -1,17 +1,23 @@
-<div class="card">
-  <h2>Topics</h2>
-  <table *ngIf="topicList.length > 0">
-    <tr>
-      <td>Topic</td>
-      <td>Messages</td>
-      <td>Display</td>
-    </tr>
-    <tr *ngFor="let row of topicList">
-      <td>{{row}}</td>
-      <td>{{topics[row]}}</td>
-      <td>
-        <button (click)="topicSelected.next(row)">Show</button>
-      </td>
-    </tr>
-  </table>
+<div class="card align-top mr-3 full-height mb-3">
+  <div class="card-body full-height scrollable">
+    <h2>Topics</h2>
+    <table class="table table-striped" *ngIf="topicList.length > 0">
+      <thead>
+      <tr>
+        <th>Topic</th>
+        <th>Messages</th>
+        <th>Display</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let row of topicList">
+        <td>{{row}}</td>
+        <td>{{topics[row]}}</td>
+        <td>
+          <button class="btn btn-sm btn-primary" (click)="topicSelected.next(row)">Show</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

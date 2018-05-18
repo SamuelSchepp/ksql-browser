@@ -5,7 +5,7 @@ export class Queue<T> {
   private _data: T[];
 
   constructor(size?: number) {
-    this._size = getOrDefault(size, 10000);
+    this._size = getOrDefault(size, 100);
     this._data = [];
   }
 
@@ -18,6 +18,14 @@ export class Queue<T> {
 
   get data(): T[] {
     return this._data;
+  }
+
+  get dataReversed(): T[] {
+    const akku: T[] = [];
+    for(let i = this._data.length - 1; i >= 0; --i) {
+      akku.push(this._data[i]);
+    }
+    return akku;
   }
 
   get length(): number {

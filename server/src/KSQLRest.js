@@ -19,7 +19,13 @@ class KSQLRest {
     getStreams() {
         return __awaiter(this, void 0, void 0, function* () {
             const result = yield this.runKSQLStatement('LIST STREAMS;');
-            return result;
+            return result[0]['streams']['streams'];
+        });
+    }
+    describe(name) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const result = yield this.runKSQLStatement(`DESCRIBE extended ${name};`);
+            return result[0];
         });
     }
     runKSQLStatement(statement) {
@@ -38,7 +44,7 @@ class KSQLRest {
                         },
                     },
                 });
-                return result[0]['streams']['streams'];
+                return result;
             }
             catch (err) {
                 console.log(JSON.stringify(err));

@@ -1,0 +1,11 @@
+<div class="d-inline-block">
+  <app-logo></app-logo>
+  <br>
+  <app-post-to-topic></app-post-to-topic>
+  <br>
+  <app-create-topic></app-create-topic>
+</div>
+
+<app-topics (topicSelected)="topicSelected($event)"></app-topics>
+<app-topic #topic [selectedTopic]="selectedTopic"></app-topic>
+

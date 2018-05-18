@@ -1,4 +1,4 @@
-<div class="card align-top mr-3 full-height">
+<div class="card align-top mr-3 full-height mb-3">
   <div class="card-body full-height scrollable">
     <h2>Streams</h2>
     <table class="table table-striped" *ngIf="streams.length > 0">
@@ -7,6 +7,7 @@
         <th>Stream</th>
         <th>Topic</th>
         <th>Format</th>
+        <th></th>
       </tr>
       </thead>
       <tbody>
@@ -14,6 +15,7 @@
         <td>{{stream.name}}</td>
         <td>{{stream.topic}}</td>
         <td>{{stream.format}}</td>
+        <td><button class="btn btn-sm btn-primary" (click)="describe.next(stream.name)">i</button></td>
       </tr>
       </tbody>
     </table>

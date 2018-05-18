@@ -13,7 +13,12 @@ export class KSQLRest {
 
   async getStreams(): Promise<string[]> {
     const result = await this.runKSQLStatement('LIST STREAMS;');
-    return result as string[];
+    return result[0]['streams']['streams'] as string[];
+  }
+
+  async describe(name: string): Promise<any> {
+    const result: any = await this.runKSQLStatement(`DESCRIBE extended ${name};`);
+    return result[0];
   }
 
   private async runKSQLStatement(statement: string): Promise<any> {
@@ -31,7 +36,7 @@ export class KSQLRest {
           },
         },
       });
-      return result[0]['streams']['streams'];
+      return result;
     } catch (err) {
       console.log(JSON.stringify(err));
       return {};

@@ -65,7 +65,12 @@ class Main {
       res.send(await this.ksqlRest.getStreams());
     });
 
+    router.get('/describe/:name', async (req, res) => {
+      res.send(await this.ksqlRest.describe(req.params.name));
+    });
+
     router.use('/', express.static(__dirname + '/../../client/dist'));
+    router.use('/*', express.static(__dirname + '/../../client/dist'));
   }
 }
 

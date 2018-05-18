@@ -71,6 +71,8 @@ class KafkaNode {
         });
         this._consumers[topicName].on('error', (error) => {
             console.log(`${topicName} error: ${JSON.stringify(error)}`);
+            this._consumers[topicName].close(true, () => { });
+            this._clients[topicName].close(() => { });
         });
         this._consumers[topicName].on('offsetOutOfRange', (error) => {
             console.log(`${topicName} error: ${JSON.stringify(error)}`);

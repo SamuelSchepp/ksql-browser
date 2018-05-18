@@ -61,7 +61,11 @@ class Main {
         router.get('/streams', (req, res) => __awaiter(this, void 0, void 0, function* () {
             res.send(yield this.ksqlRest.getStreams());
         }));
+        router.get('/describe/:name', (req, res) => __awaiter(this, void 0, void 0, function* () {
+            res.send(yield this.ksqlRest.describe(req.params.name));
+        }));
         router.use('/', express.static(__dirname + '/../../client/dist'));
+        router.use('/*', express.static(__dirname + '/../../client/dist'));
     }
 }
 new Main().start();

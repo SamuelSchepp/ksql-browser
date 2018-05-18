@@ -1,0 +1,14 @@
+<div class="card">
+  <ng-container *ngIf="selectedTopic.length > 0">
+
+    <h2>Topic: {{selectedTopic}}</h2>
+    <table *ngIf="displayData.length > 0">
+      <tr>
+        <td *ngFor="let key of keys(displayData[0])">{{key}}</td>
+      </tr>
+      <tr *ngFor="let row of displayData">
+        <td *ngFor="let key of keys(row)">{{row[key]}}</td>
+      </tr>
+    </table>
+  </ng-container>
+</div>

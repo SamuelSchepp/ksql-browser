@@ -9,7 +9,7 @@ export class KafkaProxy {
   }
 
   static kafkaProxy() {
-    return (req: Request, res: Response, next) => {
+    return (req: Request, res: Response, next: () => void) => {
       request({
         method: req.method,
         body: req.body,

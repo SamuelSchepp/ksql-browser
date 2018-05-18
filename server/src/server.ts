@@ -1,6 +1,6 @@
 import * as express from 'express';
 import {Consumer} from 'kafka-node';
-import {KafkaClientWrapper} from './KafkaClient';
+import {KafkaNode} from './KafkaNode';
 import {KafkaProxy} from './KafkaProxy';
 import {Express} from 'express';
 import {RequestError} from 'request-promise/errors';
@@ -8,17 +8,17 @@ import {RequestError} from 'request-promise/errors';
 class Main {
   private router: Express;
   private kafkaProxy: KafkaProxy;
-  private kafkaClientWrapper: KafkaClientWrapper;
+  private kafkaNode: KafkaNode;
 
   async start() {
     this.router = express();
     this.router.use(express.json());
 
     this.kafkaProxy = new KafkaProxy();
-    this.kafkaClientWrapper = new KafkaClientWrapper();
+    this.kafkaNode = new KafkaNode();
 
     const topics = await this.kafkaProxy.getTopics();
-    await this.kafkaClientWrapper.connect(topics);
+    await this.kafkaNode.connect(topics);
     console.log("Kafka Wrapper connected");
 
     this.configureRouter(this.router);
@@ -29,18 +29,28 @@ class Main {
 
   private configureRouter(router: Express) {
     router.get('/topics', async (req, res) => {
-      const topicList = await this.kafkaProxy.getTopics();
-      res.send(topicList)
+      const count: {[topic: string]: number} = this.kafkaNode.counts;
+      res.send(count);
     });
 
     router.get('/topic/:id', async (req, res) => {
-      const topic = await this.kafkaClientWrapper.getTopicData(req.params.id);
+      const topic: string[] = this.kafkaNode.getTopicData(req.params.id);
       res.send(topic)
+    });
+
+    router.post('/topic', async (req, res) => {
+      try {
+        await this.kafkaNode.createTopic(req.body.topic);
+        res.send({message: 'okay'});
+      } catch (err) {
+        res.status(err);
+        res.send(err)
+      }
     });
 
     router.post('/topic/:id', async (req, res) => {
       try {
-        const topic = await this.kafkaProxy.postToTopic(req.params.id, req.body);
+        const topic = await this.kafkaNode.sendToTopic(req.params.id, req.body);
         res.send({message: 'okay'});
       } catch (err) {
         res.status(err.response.statusCode);
@@ -48,7 +58,7 @@ class Main {
       }
     });
 
-    router.use('/', express.static(__dirname + '/../client/dist'));
+    router.use('/', express.static(__dirname + '/../../client/dist'));
   }
 }
 

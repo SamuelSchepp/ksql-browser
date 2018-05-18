@@ -1,0 +1,17 @@
+<div class="card">
+  <h2>Topics</h2>
+  <table *ngIf="topicList.length > 0">
+    <tr>
+      <td>Topic</td>
+      <td>Messages</td>
+      <td>Display</td>
+    </tr>
+    <tr *ngFor="let row of topicList">
+      <td>{{row}}</td>
+      <td>{{topics[row]}}</td>
+      <td>
+        <button (click)="topicSelected.next(row)">Show</button>
+      </td>
+    </tr>
+  </table>
+</div>

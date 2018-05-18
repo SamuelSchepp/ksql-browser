@@ -1,6 +1,6 @@
 {
 	"scripts": {
-		"start": "ts-node $NODE_DEBUG_OPTION server.ts"
+		"start": "ts-node $NODE_DEBUG_OPTION src/server.ts"
 	},
 	"dependencies": {
 		"@types/express": "^4.11.1",
@@ -9,6 +9,7 @@
 		"@types/request-promise": "^4.1.41",
 		"express": "^4.16.3",
 		"kafka-node": "^2.6.1",
+		"npm-check-updates": "^2.14.2",
 		"request": "^2.86.0",
 		"request-promise": "^4.2.2",
 		"tslint": "^5.10.0",

@@ -15,6 +15,8 @@ import { KsqlPageComponent } from './ksql/ksql-page/ksql-page.component';
 import {RouterModule, Routes} from '@angular/router';
 import { LogoComponent } from './logo/logo.component';
 import { DescribeComponent } from './ksql/describe/describe.component';
+import { TablesComponent } from './ksql/tables/tables.component';
+import { RunKsqlComponent } from './ksql/run-ksql/run-ksql.component';
 
 const appRoutes: Routes = [
   { path: 'topics-page', component: TopicPageComponent },
@@ -33,7 +35,9 @@ const appRoutes: Routes = [
     TopicPageComponent,
     KsqlPageComponent,
     LogoComponent,
-    DescribeComponent
+    DescribeComponent,
+    TablesComponent,
+    RunKsqlComponent
   ],
   imports: [
     RouterModule.forRoot(

@@ -5,8 +5,11 @@ import {KafkaProxy} from './KafkaProxy';
 import {Express} from 'express';
 import {RequestError} from 'request-promise/errors';
 import {KSQLRest} from './KSQLRest';
+import {Server} from 'http';
+import * as socket from "socket.io";
 
 class Main {
+  private server: Server;
   private router: Express;
   private kafkaProxy: KafkaProxy;
   private kafkaNode: KafkaNode;
@@ -25,8 +28,22 @@ class Main {
     console.log("Kafka Wrapper connected");
 
     this.configureRouter(this.router);
-    this.router.listen(8080, () => {
+    this.server = this.router.listen(8080, () => {
       console.log('http://localhost:8080/');
+    });
+    this.configureWebsockets(this.server);
+  }
+
+  private configureWebsockets(server: Server): void {
+    let io = socket(server);
+    io.on('connection', (socket) => {
+      console.log('socket connected', socket.id);
+      socket.on('query', ksql => {
+        this.ksqlRest.runKSQLQuery(ksql, socket);
+      });
+      socket.on('disconnect', () => {
+        console.log('socket disconnected', socket.id);
+      })
     });
   }
 
@@ -67,8 +84,17 @@ class Main {
       res.send(await this.ksqlRest.getStreams());
     });
 
+    router.get('/tables', async (req, res) => {
+      res.send(await this.ksqlRest.getTables());
+    });
+
     router.get('/describe/:name', async (req, res) => {
       res.send(await this.ksqlRest.describe(req.params.name));
+    });
+
+    router.post('/ksql', async (req, res) => {
+      const result = await this.ksqlRest.runKSQLStatement(req.body.ksql);
+      res.send(result[0]);
     });
 
     router.use('/', express.static(__dirname + '/../../client/dist'));

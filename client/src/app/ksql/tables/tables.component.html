@@ -1,21 +1,21 @@
 <div class="card align-top mr-3 full-height mb-3">
   <div class="card-body full-height scrollable">
-    <h2>Streams</h2>
-    <table class="table table-striped" *ngIf="streams.length > 0">
+    <h2>Tables</h2>
+    <table class="table table-striped" *ngIf="tables.length > 0">
       <thead>
       <tr>
-        <th>Stream</th>
+        <th>Table</th>
         <th>Topic</th>
         <th>Format</th>
         <th></th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let stream of streams">
+      <tr *ngFor="let stream of tables">
         <td class="console">{{stream.name}}</td>
         <td class="console">{{stream.topic}}</td>
         <td class="console">{{stream.format}}</td>
-        <td class="console"><button class="btn btn-sm btn-primary" (click)="describe.next(stream.name)">i</button></td>
+        <td><button class="btn btn-sm btn-primary" (click)="describe.next(stream.name)">i</button></td>
       </tr>
       </tbody>
     </table>

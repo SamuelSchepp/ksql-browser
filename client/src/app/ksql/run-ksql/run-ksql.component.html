@@ -1,0 +1,13 @@
+<div class="card align-top mr-3 mb-3">
+  <div class="card-body">
+    <h2>KSQL</h2>
+    <label>KSQL</label>
+    <input class="console" style="width: 450pt" [(ngModel)]="ksql">
+    <br>
+    <button class="btn btn-sm btn-primary" (click)="runAsStatement()">Run as statement</button>
+    <button class="btn btn-sm btn-primary" (click)="runAsQuery()">Run as query</button>
+    <span *ngIf="connected">loading via websocket</span>
+    <br>
+    <textarea class="console mt-3" style="width: 500pt; height: 500pt">{{output}}</textarea>
+  </div>
+</div>

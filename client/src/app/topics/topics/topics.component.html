@@ -11,8 +11,8 @@
       </thead>
       <tbody>
       <tr *ngFor="let row of topicList">
-        <td>{{row}}</td>
-        <td>{{topics[row]}}</td>
+        <td class="console">{{row}}</td>
+        <td class="console">{{topics[row]}}</td>
         <td>
           <button class="btn btn-sm btn-primary" (click)="topicSelected.next(row)">Show</button>
         </td>

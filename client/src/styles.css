@@ -11,3 +11,8 @@
 .scrollable {
     overflow: scroll;
 }
+
+.console {
+    font-family: "Lucida Console";
+    font-size: smaller;
+}

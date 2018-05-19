@@ -51,7 +51,7 @@ export class KafkaNode {
       },
     );
     this._consumers[topicName].on('message', (message) => {
-      console.log(`${topicName}: ${JSON.stringify(message, null, 4)}`);
+      // console.log(`${topicName}: ${JSON.stringify(message, null, 4)}`);
       if(!message.value) {
         console.log(`error from ${topicName}: no value field`);
       } else {

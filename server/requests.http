@@ -17,3 +17,12 @@ GET http://localhost:8080/streams
 GET http://localhost:8080/describe/user_stream
 
 ###
+
+POST http://localhost:8080/ksql
+Content-Type: application/json
+
+{
+  "ksql": "LIST TABLES;"
+}
+
+###

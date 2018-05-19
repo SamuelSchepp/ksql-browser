@@ -9,7 +9,7 @@
       </thead>
       <tbody>
       <tr *ngFor="let row of displayData">
-        <td *ngFor="let key of keys(row)">{{row[key]}}</td>
+        <td class="console" *ngFor="let key of keys(row)">{{row[key]}}</td>
       </tr>
       </tbody>
     </table>

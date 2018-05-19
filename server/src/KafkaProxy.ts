@@ -35,6 +35,10 @@ export class KafkaProxy {
     return topicList as string[];
   }
 
+  async createTopic(topicName: string): Promise<void> {
+    return this.postToTopic(topicName, {});
+  }
+
   async postToTopic(topicName: string, data: any): Promise<void> {
     const result = await request({
       method: 'POST',

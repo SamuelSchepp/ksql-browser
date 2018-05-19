@@ -68,14 +68,16 @@ export class KafkaNode {
       }
     });
     this._consumers[topicName].on('error', (error) => {
-      console.log(`${topicName} consumer error: ${JSON.stringify(error)}`);
-      this._consumers[topicName].close(true, () => {});
-      this._clients[topicName].close(() => {});
+        console.log(`${topicName} consumer error: ${JSON.stringify(error)}`);
+        this._consumers[topicName].close(true, () => { });
+        this._clients[topicName].close(() => { });
+        delete this._topics[topicName];
     });
     this._consumers[topicName].on('offsetOutOfRange', (error) => {
       console.log(`${topicName} consumer error: ${JSON.stringify(error)}`);
       this._consumers[topicName].close(true, () => {});
       this._clients[topicName].close(() => {});
+      delete this._topics[topicName];
     })
   }
 
@@ -90,37 +92,6 @@ export class KafkaNode {
       this.connectToTopic(topicName);
       return [];
     }
-  }
-
-  createTopic(topicName: string): Promise<void> {
-    return new Promise<void>((fulfill, reject) => {
-      this._producer.createTopics([topicName], (err, data) => {
-        if(err) {
-          console.log(err);
-          reject();
-        } else {
-          console.log(`Created ${topicName}`);
-          this.connectToTopic(topicName);
-          fulfill();
-        }
-      });
-    });
-  }
-
-  async sendToTopic(topicName: string, data: any): Promise<void> {
-    console.log(`sending to topic ${topicName}: ${JSON.stringify(data)}`);
-    return new Promise<void>((fulfil, reject) => {
-      this._producer.send([{
-        topic: topicName,
-        messages: JSON.stringify(data)
-      }], (err: Error, res: any) => {
-        if(err) {
-          reject(err);
-        }
-        console.log(`okay send to topic: ${JSON.stringify(res)}`);
-        fulfil();
-      });
-    })
   }
 
   get client(): KafkaClient {

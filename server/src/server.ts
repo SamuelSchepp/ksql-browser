@@ -43,7 +43,7 @@ class Main {
 
     router.post('/topic', async (req, res) => {
       try {
-        await this.kafkaNode.createTopic(req.body.topic);
+        await this.kafkaProxy.createTopic(req.body.topic);
         res.send({message: 'okay'});
       } catch (err) {
         res.status(err);
@@ -53,8 +53,9 @@ class Main {
 
     router.post('/topic/:id', async (req, res) => {
       try {
-        const topic = await this.kafkaNode.sendToTopic(req.params.id, req.body);
+        const topic = await this.kafkaProxy.postToTopic(req.params.id, req.body);
         res.send({message: 'okay'});
+        await this.kafkaNode.connectToTopic(req.params.id);
       } catch (err) {
         res.status(500);
         res.send(err)

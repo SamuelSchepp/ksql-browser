@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import * as io from 'socket.io-client';
+import Socket = SocketIOClient.Socket;
 
 @Component({
   selector: 'app-run-ksql',
@@ -12,6 +13,7 @@ export class RunKsqlComponent implements OnInit {
   ksql: string;
   output: string;
   connected: boolean;
+  socket: Socket;
 
   constructor(private httpClient: HttpClient) {
     this.connected = false;
@@ -22,16 +24,24 @@ export class RunKsqlComponent implements OnInit {
   }
 
   runAsQuery(): void {
+    this.disconnectSafe()
+
     this.output = '';
-    const socket = io('/');
-    socket.on('result', (result: any) => {
+    this.socket = io('/');
+    this.socket.on('result', (result: any) => {
       this.output = Object.values(result.row.columns).join(' | ') + '\n' + this.output;
     });
-    socket.on('disconnect', (result: any) => {
+    this.socket.on('disconnect', (result: any) => {
       this.connected = false;
     });
-    socket.emit('query', this.ksql);
+    this.socket.emit('query', this.ksql);
     this.connected = true;
+  }
+
+  disconnectSafe(): void {
+    if (this.socket && this.socket.connected) {
+      this.socket.disconnect();
+    }
   }
 
   async runAsStatement(): Promise<void> {

@@ -1,4 +1,16 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div class="pt-3 pl-3 full-height pb-3">
-  <router-outlet></router-outlet>
+
+<div style="width: 200pt; display: inline-block" class="full-height border-right shadow-sm position-fixed">
+  <h3 class="ml-3 mt-3 mb-3">KSQL Browser</h3>
+  <div class="pl-3 pr-3 nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+    <a class="nav-link btn" routerLink="/topics-page">Topics</a>
+    <a class="nav-link btn" routerLink="/streams-page">Streams</a>
+    <a class="nav-link btn" routerLink="/tables-page">Tables</a>
+    <a class="nav-link btn" routerLink="/ksql-page">KSQL</a>
+  </div>
+</div>
+<div style="padding-left: 200pt">
+  <div class="pt-3 pl-3 full-height pb-3">
+    <router-outlet></router-outlet>
+  </div>
 </div>

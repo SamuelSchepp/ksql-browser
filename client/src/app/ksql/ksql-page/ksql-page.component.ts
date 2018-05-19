@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {DescribeComponent} from '../describe/describe.component';
+import {DescribeComponent} from '../../common/describe/describe.component';
 
 @Component({
   selector: 'app-ksql-page',
@@ -7,8 +7,6 @@ import {DescribeComponent} from '../describe/describe.component';
   styleUrls: ['./ksql-page.component.css']
 })
 export class KsqlPageComponent implements OnInit {
-
-  @ViewChild(DescribeComponent) describeComponent: DescribeComponent;
 
   constructor() { }
 

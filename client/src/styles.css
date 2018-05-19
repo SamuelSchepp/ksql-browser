@@ -5,7 +5,7 @@
 }
 
 .full-height, body, html {
-    height: 500pt;
+    height: 100%;
 }
 
 .scrollable {

@@ -4,9 +4,9 @@
     <label>KSQL</label>
     <input class="console" style="width: 450pt" [(ngModel)]="ksql">
     <br>
-    <button class="btn btn-sm btn-primary" (click)="runAsStatement()">Run as statement</button>
-    <button class="btn btn-sm btn-primary" (click)="runAsQuery()">Run as query</button>
-    <span *ngIf="connected">loading via websocket</span>
+    <button class="btn btn-sm btn-primary" *ngIf="!connected" (click)="runAsStatement()">Run as statement</button>
+    <button class="btn btn-sm btn-primary" *ngIf="!connected" (click)="runAsQuery()">Run as query</button>
+    <button class="btn btn-sm btn-danger" *ngIf="connected" (click)="disconnectSafe()">Stop</button>
     <br>
     <textarea class="console mt-3" style="width: 500pt; height: 500pt">{{output}}</textarea>
   </div>

@@ -73,7 +73,6 @@ export class KSQLRest {
             try {
               res.split('\n')
                 .map(line => JSON.parse(line))
-                .reverse()
                 .filter(line => isDefined(line.row))
                 .forEach(line => socket.emit('result', line));
             } catch (err) {

@@ -1,7 +1,8 @@
 import * as request from 'request-promise';
+import {endpoint} from './Config';
 
 export class KSQLRest {
-  private ksqlBase = 'http://localhost:8088';
+  private ksqlBase = `http://${endpoint}:8088`;
 
   constructor() {
 

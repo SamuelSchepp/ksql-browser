@@ -56,7 +56,7 @@ class Main {
         const topic = await this.kafkaNode.sendToTopic(req.params.id, req.body);
         res.send({message: 'okay'});
       } catch (err) {
-        res.status(err.response.statusCode);
+        res.status(500);
         res.send(err)
       }
     });

@@ -1,6 +1,7 @@
 import {Client, Consumer, KafkaClient, Producer} from 'kafka-node';
 import {Queue} from './Queue';
 import {isDefined, isNullOrUndefined} from './Helper';
+import {endpoint} from './Config';
 
 export class KafkaNode {
   private _client: KafkaClient;
@@ -12,7 +13,7 @@ export class KafkaNode {
   async connect(topicList: string[]): Promise<void> {
     await new Promise<void>((fulfill, reject) => {
       this._client = new KafkaClient({
-        kafkaHost: 'localhost:9092'
+        kafkaHost: `${endpoint}:9092`
       });
 
       this._producer = new Producer(this._client);
@@ -35,7 +36,7 @@ export class KafkaNode {
       return;
     }
 
-    this._clients[topicName] = new Client('localhost:2181/');
+    this._clients[topicName] = new Client(`${endpoint}:2181/`);
     this._topics[topicName] = new Queue<string>();
 
     this._consumers[topicName] = new Consumer(
@@ -67,12 +68,12 @@ export class KafkaNode {
       }
     });
     this._consumers[topicName].on('error', (error) => {
-      console.log(`${topicName} error: ${JSON.stringify(error)}`);
+      console.log(`${topicName} consumer error: ${JSON.stringify(error)}`);
       this._consumers[topicName].close(true, () => {});
       this._clients[topicName].close(() => {});
     });
     this._consumers[topicName].on('offsetOutOfRange', (error) => {
-      console.log(`${topicName} error: ${JSON.stringify(error)}`);
+      console.log(`${topicName} consumer error: ${JSON.stringify(error)}`);
       this._consumers[topicName].close(true, () => {});
       this._clients[topicName].close(() => {});
     })

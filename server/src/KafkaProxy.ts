@@ -1,8 +1,9 @@
 import {Request, Response} from 'express';
 import * as request from 'request-promise';
+import {endpoint} from './Config';
 
 export class KafkaProxy {
-  private static kafkaBase = 'http://localhost:8082';
+  private static kafkaBase = `http://${endpoint}:8082`;
 
   static getURL(path: string): string {
     return this.kafkaBase + path;

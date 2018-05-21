@@ -1,16 +1,6 @@
 #!/bin/bash
 
-echo "Building client..."
-cd client
-npm install --silent
-npm run build
-cd ..
-
-echo "Building Server..."
+echo "Starting server..."
 cd server
-npm install --silent
-npm run build
-
-echo "Starting Server..."
 npm run start
 

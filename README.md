@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/SamuelSchepp/ksql-browser.svg?branch=master)](https://travis-ci.org/SamuelSchepp/ksql-browser)
+
 # KSQL Browser
 *A express.js based Wrapper for Confluent.*
 
@@ -9,7 +11,11 @@
 * Node v8.9.0 (LTS)
 
 ### Build & Run
-`./run.sh`
+```bash
+./install.sh
+./build.sh
+./run.sh
+```
 
 The script builds the client frontend (Angular 5) and the server (Node.js app).
 
@@ -29,7 +35,7 @@ The script builds the client frontend (Angular 5) and the server (Node.js app).
 * KSQL
 	* Run statements
 	* Run live queries
-	
+
 ![screenshot 2018-05-21 13 37 34](https://user-images.githubusercontent.com/11752441/40310999-d93c545e-5d0e-11e8-8a7c-d4184a4a90d1.png)
 
 

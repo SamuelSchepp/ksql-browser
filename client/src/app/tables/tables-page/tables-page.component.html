@@ -1,2 +1,3 @@
-<app-tables (describe)="describeComponent.describe($event)"></app-tables>
+<app-tables (describe)="describeComponent.describe($event)" (ksql)="runKSQL($event)"></app-tables>
 <app-describe #describeComponent></app-describe>
+<app-run-ksql #ksql></app-run-ksql>

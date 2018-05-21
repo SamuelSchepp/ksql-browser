@@ -24,12 +24,22 @@ export class RunKsqlComponent implements OnInit {
   }
 
   runAsQuery(): void {
-    this.disconnectSafe()
+    this.disconnectSafe();
 
     this.output = '';
     this.socket = io('/');
     this.socket.on('result', (result: any) => {
-      this.output = Object.values(result.row.columns).join(' | ') + '\n' + this.output;
+      let toAdd = '';
+      if (result.message) {
+        toAdd = result.message;
+      } else if (result.row && result.row.columns) {
+        toAdd = Object.values(result.row.columns).join(' | ');
+      } else if (result.errorMessage) {
+        toAdd = result.errorMessage.message;
+      } else {
+        toAdd = JSON.stringify(result, null, 2);
+      }
+      this.output = toAdd + '\n' + this.output;
     });
     this.socket.on('disconnect', (result: any) => {
       this.connected = false;

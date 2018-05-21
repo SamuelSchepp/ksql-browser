@@ -16,6 +16,11 @@ class Main {
   private ksqlRest: KSQLRest;
 
   async start() {
+    console.log('┌────────────────────────┐');
+    console.log('│ KSQL Browser           │');
+    console.log('│ http://localhost:8080/ │');
+    console.log('└────────────────────────┘');
+
     this.router = express();
     this.router.use(express.json());
 
@@ -29,7 +34,7 @@ class Main {
 
     this.configureRouter(this.router);
     this.server = this.router.listen(8080, () => {
-      console.log('http://localhost:8080/');
+      console.log("Ready.")
     });
     this.configureWebsockets(this.server);
   }

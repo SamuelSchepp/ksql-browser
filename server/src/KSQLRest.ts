@@ -69,20 +69,20 @@ export class KSQLRest {
         resp.on('data', (chunk: Buffer) => {
           const res: string = chunk.toString('utf-8').trim();
           if(res.length > 0) {
-            console.log(`<${res}>`);
             try {
               res.split('\n')
                 .map(line => JSON.parse(line))
-                .filter(line => isDefined(line.row))
                 .forEach(line => socket.emit('result', line));
             } catch (err) {
               console.log(err);
             }
           }
         });
-
+        resp.on('error', (err) => {
+          console.log(err);
+          socket.disconnect(true);
+        });
         resp.on('end', () => {
-          console.log()
           socket.disconnect(true);
         });
       });

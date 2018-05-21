@@ -1,2 +1,3 @@
-<app-streams (describe)="describeComponent.describe($event)"></app-streams>
+<app-streams (describe)="describeComponent.describe($event)" (ksql)="runKSQL($event)"></app-streams>
 <app-describe #describeComponent></app-describe>
+<app-run-ksql #ksql></app-run-ksql>

@@ -17,6 +17,7 @@ export class StreamsComponent implements OnInit, OnDestroy {
 
   private timer: number;
   @Output() describe: EventEmitter<string> = new EventEmitter<string>();
+  @Output() ksql: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(private httpClient: HttpClient) {
     this.streams = [];

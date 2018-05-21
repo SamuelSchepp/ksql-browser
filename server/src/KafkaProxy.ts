@@ -55,7 +55,5 @@ export class KafkaProxy {
       },
       json: true,
     });
-
-    console.log(result);
   }
 }

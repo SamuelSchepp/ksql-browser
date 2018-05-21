@@ -8,6 +8,7 @@
         <th>Topic</th>
         <th>Format</th>
         <th></th>
+        <th></th>
       </tr>
       </thead>
       <tbody>
@@ -15,7 +16,8 @@
         <td class="console">{{stream.name}}</td>
         <td class="console">{{stream.topic}}</td>
         <td class="console">{{stream.format}}</td>
-        <td class="console"><button class="btn btn-sm btn-primary" (click)="describe.next(stream.name)">i</button></td>
+        <td class="console"><button class="btn btn-sm btn-primary" (click)="describe.next(stream.name)">Describe</button></td>
+        <td class="console"><button class="btn btn-sm btn-primary" (click)="ksql.next('select * from ' + stream.name + ';')">Show</button></td>
       </tr>
       </tbody>
     </table>

@@ -1,6 +1,8 @@
 # KSQL Browser
 *A express.js based Wrapper for Confluent.*
 
+![screenshot 2018-05-21 13 34 41](https://user-images.githubusercontent.com/11752441/40310973-c7bd7c12-5d0e-11e8-9c54-4501ec01f4f3.png)
+
 ## Instructions
 
 ### Install
@@ -27,6 +29,9 @@ The script builds the client frontend (Angular 5) and the server (Node.js app).
 * KSQL
 	* Run statements
 	* Run live queries
+	
+![screenshot 2018-05-21 13 37 34](https://user-images.githubusercontent.com/11752441/40310999-d93c545e-5d0e-11e8-8a7c-d4184a4a90d1.png)
+
 
 ### Used interfaces
 

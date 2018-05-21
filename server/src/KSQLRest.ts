@@ -88,7 +88,7 @@ export class KSQLRest {
       });
 
       req.on('error', (err) => {
-        socket.emit('error', err);
+        console.log(err);
         socket.disconnect(true);
       });
 

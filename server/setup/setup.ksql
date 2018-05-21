@@ -8,3 +8,4 @@ CREATE STREAM cloud_raw (CreatedAt bigint,Id bigint, Text VARCHAR, SOURCE VARCHA
 CREATE STREAM cloud AS SELECT TIMESTAMPTOSTRING(CreatedAt, 'yyyy-MM-dd HH:mm:ss.SSS') AS CreatedAt, EXTRACTJSONFIELD(user,'$.Name') AS user_Name, EXTRACTJSONFIELD(user,'$.ScreenName') AS user_ScreenName, EXTRACTJSONFIELD(user,'$.Location') AS user_Location, EXTRACTJSONFIELD(user,'$.Description') AS user_Description, Text,hashtagentities,lang FROM cloud_raw ;
 CREATE TABLE user_cloud_count AS SELECT user_screenname, count(*) AS  tweet_count FROM cloud WINDOW TUMBLING (SIZE 1 HOUR) GROUP BY user_screenname ;
 CREATE TABLE USER_CLOUD_COUNT_DISPLAY AS SELECT TIMESTAMPTOSTRING(ROWTIME, 'yyyy-MM-dd HH:mm:ss.SSS') AS WINDOW_START, USER_SCREENNAME, TWEET_COUNT FROM user_cloud_count;
+

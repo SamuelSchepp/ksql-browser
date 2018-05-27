@@ -1,5 +1,11 @@
 [![Build Status](https://travis-ci.org/SamuelSchepp/ksql-browser.svg?branch=master)](https://travis-ci.org/SamuelSchepp/ksql-browser)
 
+## Live Demo
+
+[http://195.201.227.204:8080/](http://195.201.227.204:8080/)
+
+This demo instance has some some demo streams and one Twitter stream, which is configured with the keyword 'cloud'.
+
 # KSQL Browser
 *A express.js based Wrapper for Confluent.*
 
@@ -70,8 +76,4 @@ The script builds the client frontend (Angular 5) and the server (Node.js app).
 | Kafka REST    | 8082 | Create topic, send message      |
 | KSQL REST     | 8088 | Run KSQL statements and queries |
 
-## Live Demo
 
-[http://195.201.227.204:8080/](http://195.201.227.204:8080/)
-
-This demo instance has some some demo streams and one Twitter stream, which is configured with the keyword 'cloud'.

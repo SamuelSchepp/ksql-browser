@@ -29,7 +29,7 @@ class Main {
     this.kafkaNode = new KafkaNode();
 
     const topics = await this.kafkaProxy.getTopics();
-    await this.kafkaNode.connect(topics);
+    this.kafkaNode.connect(topics);
     console.log("Kafka Wrapper connected");
 
     this.configureRouter(this.router);
@@ -54,6 +54,8 @@ class Main {
 
   private configureRouter(router: Express) {
     router.get('/topics', async (req, res) => {
+      const topics = await this.kafkaProxy.getTopics();
+      this.kafkaNode.connect(topics);
       const count: {[topic: string]: number} = this.kafkaNode.counts;
       res.send(count);
     });

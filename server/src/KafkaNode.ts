@@ -4,37 +4,21 @@ import {isDefined, isNullOrUndefined} from './Helper';
 import {endpoint} from './Config';
 
 export class KafkaNode {
-  private _client: KafkaClient;
-  private _producer: Producer;
   private _clients: {[key: string]: Client} = {};
   private _topics: {[key: string]: Queue<string>} = {};
   private _consumers: {[key: string]: Consumer} = {};
 
-  async connect(topicList: string[]): Promise<void> {
-    await new Promise<void>((fulfill, reject) => {
-      this._client = new KafkaClient({
-        kafkaHost: `${endpoint}:9092`
-      });
-
-      this._producer = new Producer(this._client);
-      this._client.on('ready', () => {
-        fulfill();
-      });
-      this._client.on('error', (error) => {
-        reject(error);
-      });
-    });
-
+  connect(topicList: string[]): void {
     topicList.forEach((topicName: string) => {
       this.connectToTopic(topicName);
     })
   }
 
   connectToTopic(topicName: string): void {
-    console.log(`Connecting to ${topicName}`);
     if(this.isConnectedToTopic(topicName)) {
       return;
     }
+    console.log(`Connecting to ${topicName}`);
 
     this._clients[topicName] = new Client(`${endpoint}:2181/`);
     this._topics[topicName] = new Queue<string>();
@@ -92,10 +76,6 @@ export class KafkaNode {
       this.connectToTopic(topicName);
       return [];
     }
-  }
-
-  get client(): KafkaClient {
-    return this._client;
   }
 
   get counts(): {[topic: string]: number}  {

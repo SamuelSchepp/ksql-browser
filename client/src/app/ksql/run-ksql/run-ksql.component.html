@@ -8,6 +8,16 @@
     <button class="btn btn-sm btn-primary" *ngIf="!connected" (click)="runAsQuery()">Run as query</button>
     <button class="btn btn-sm btn-danger" *ngIf="connected" (click)="disconnectSafe()">Stop</button>
     <br>
-    <textarea class="console mt-3" style="width: 500pt; height: 500pt">{{output}}</textarea>
+    <p>{{error}}</p>
+    <textarea *ngIf="!showAsTable && output.length > 0" class="console mt-3" style="width: 500pt; height: 500pt">{{output}}</textarea>
+    <table class="table table-striped" *ngIf="showAsTable && output.length > 0">
+      <tbody>
+      <tr *ngFor="let row of output">
+        <td class="console" *ngFor="let col of row">
+          {{col}}
+        </td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import * as io from 'socket.io-client';
 import Socket = SocketIOClient.Socket;
@@ -6,18 +6,22 @@ import Socket = SocketIOClient.Socket;
 @Component({
   selector: 'app-run-ksql',
   templateUrl: './run-ksql.component.html',
-  styleUrls: ['./run-ksql.component.css']
+  styleUrls: ['./run-ksql.component.css'],
 })
 export class RunKsqlComponent implements OnInit {
 
   ksql: string;
-  output: string;
+  output: string | any[];
   connected: boolean;
   socket: Socket;
+  error: string;
+
+  showAsTable: boolean;
 
   constructor(private httpClient: HttpClient) {
     this.connected = false;
     this.ksql = 'SELECT * FROM users LIMIT 5;';
+    this.showAsTable = false;
   }
 
   ngOnInit() {
@@ -28,18 +32,16 @@ export class RunKsqlComponent implements OnInit {
 
     this.output = '';
     this.socket = io('/');
+    this.output = [];
+    this.showAsTable = true;
     this.socket.on('result', (result: any) => {
-      let toAdd = '';
       if (result.message) {
-        toAdd = result.message;
-      } else if (result.row && result.row.columns) {
-        toAdd = Object.values(result.row.columns).join(' | ');
+        this.error = result.message;
       } else if (result.errorMessage) {
-        toAdd = result.errorMessage.message;
+        this.error = result.errorMessage.message;
       } else {
-        toAdd = JSON.stringify(result, null, 2);
+        (this.output as any[]).push(result.row.columns);
       }
-      this.output = toAdd + '\n' + this.output;
     });
     this.socket.on('disconnect', (result: any) => {
       this.connected = false;
@@ -54,8 +56,14 @@ export class RunKsqlComponent implements OnInit {
     }
   }
 
+  keys(object: any): string[] {
+    return Object.keys(object);
+  }
+
   async runAsStatement(): Promise<void> {
+    this.error = '';
     this.output = '';
+    this.showAsTable = false;
     const res = await this.httpClient.post('/ksql', {ksql: this.ksql}).toPromise();
     this.output = JSON.stringify(res, null, 4);
   }

@@ -28,10 +28,12 @@ export class KafkaNode {
       [
         {
           topic: topicName,
+          offset: 0
         },
       ],
       {
         autoCommit: true,
+        fromOffset: true
       },
     );
     this._consumers[topicName].on('message', (message) => {

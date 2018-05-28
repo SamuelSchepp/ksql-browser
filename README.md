@@ -62,6 +62,8 @@ The script builds the client frontend (Angular 5) and the server (Node.js app).
 
 ### REST Interface
 
+My server provides the following RESTfull interface:
+
 | Method | URL | Body | Result |
 |---|---|---|---|
 | GET | /| | Angular frontend app |
@@ -74,6 +76,8 @@ The script builds the client frontend (Angular 5) and the server (Node.js app).
 | GET | /describe/:name | | Results of `DESCRIBE extended <name>;` |
 | POST | /ksql | `{ "ksql": "<some statement>" }` | Results of running KSQL command as statement |
 
+My server provides the following socket interface:
+
 ### Socket.io Interface
 | Request Event | Request Payload | Result Event | Result Payload | Description |
 |---|---|---|---|---|
@@ -81,6 +85,8 @@ The script builds the client frontend (Angular 5) and the server (Node.js app).
 | | | disconnect |  | End of stream reached |
 
 ## Confluent interfaces usage
+
+My server uses the following Confluent/Kafka interfaces for communication and data fetching:
 
 | Name          | Port | Usage                           |
 |---------------|------|---------------------------------|

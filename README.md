@@ -31,19 +31,32 @@ The script builds the client frontend (Angular 5) and the server (Node.js app).
 
 ## Features
 
-* Browse topics
-	* Live feed
-	* Create topics
-	* Send data to topics
-* Browse streams and tables
-	* Get description and definitions
-	* Live feed
-* KSQL
-	* Run statements
-	* Run live queries
+### Browse topics
+* Live feed
+* Create topics
+* Send data to topics
+	
 
-![screenshot 2018-05-21 13 37 34](https://user-images.githubusercontent.com/11752441/40310999-d93c545e-5d0e-11e8-8a7c-d4184a4a90d1.png)
+	
+### Browse streams and tables
+* Get description and definitions
+* Live feed
 
+#### Stream
+<img width="1900" alt="screenshot 2018-05-28 18 21 03" src="https://user-images.githubusercontent.com/11752441/40622860-e6757ee4-62a3-11e8-80d2-d9d3b0b979c2.png">
+
+#### Table
+<img width="1468" alt="screenshot 2018-05-28 18 16 48" src="https://user-images.githubusercontent.com/11752441/40622823-bbe800e8-62a3-11e8-8cf3-4049b3e453b8.png">
+
+### KSQL
+* Run statements
+* Run live queries
+
+#### Statement
+<img width="732" alt="screenshot 2018-05-28 18 16 13" src="https://user-images.githubusercontent.com/11752441/40622816-aad6c078-62a3-11e8-81cd-252b7b800d01.png">
+
+#### Query
+<img width="708" alt="screenshot 2018-05-28 18 16 48" src="https://user-images.githubusercontent.com/11752441/40622905-1e352a82-62a4-11e8-82be-1f37d7242ae8.png">
 
 ## API
 
